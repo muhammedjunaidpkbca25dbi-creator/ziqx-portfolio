@@ -1,0 +1,87 @@
+.pill {
+  display: inline-grid;
+  align-items: center;
+  min-width: 124px;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--pf-ink);
+}
+
+.state {
+  grid-area: 1 / 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: cycle 9s var(--pf-ease-out) infinite;
+}
+
+.s2 {
+  animation-delay: 3s;
+}
+.s3 {
+  animation-delay: 6s;
+  color: var(--pf-accent);
+}
+
+@keyframes cycle {
+  0% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  3.3%,
+  29% {
+    opacity: 1;
+    transform: none;
+  }
+  33%,
+  100% {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+.dotOffline {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d18a00;
+}
+
+.spin {
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--pf-accent);
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 900ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (hover: hover) {
+  .pill:hover .state {
+    animation-play-state: paused;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .state {
+    animation: none;
+  }
+  .s3 {
+    opacity: 1;
+  }
+  .spin {
+    animation: none;
+  }
+}

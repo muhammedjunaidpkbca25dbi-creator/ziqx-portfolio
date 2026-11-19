@@ -1,0 +1,7 @@
+/* Scaffold-only reset. The Console's own global styles replace this. */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #f3f1ec;
+}

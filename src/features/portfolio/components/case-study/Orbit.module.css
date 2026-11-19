@@ -1,0 +1,133 @@
+.fig {
+  margin: 32px 0 0;
+}
+
+.card {
+  display: grid;
+  place-items: center;
+  padding: clamp(16px, 4vw, 40px);
+  background: #fff;
+  border: 1px solid rgb(0 0 0 / 0.08);
+  border-radius: 28px;
+  overflow: hidden;
+}
+
+.stage {
+  --lap: 48s;
+  position: relative;
+  width: min(100%, 560px);
+  aspect-ratio: 1;
+}
+
+/* soft dashed orbit track + the rotating ring that carries the chips */
+.ring {
+  position: absolute;
+  inset: 20%;
+  border: 1px dashed rgb(0 0 0 / 0.18);
+  border-radius: 50%;
+  animation: spin var(--lap) linear infinite;
+}
+.slot {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+.chip {
+  position: absolute;
+  left: 0;
+  top: 0;
+  translate: -50% -50%;
+  display: block;
+  width: max-content;
+  max-width: clamp(84px, 24vw, 168px);
+  padding: 8px 14px;
+  text-align: center;
+  font-size: clamp(0.72rem, 2.2vw, 0.95rem);
+  font-weight: 600;
+  line-height: 1.25;
+  color: #151515;
+  background: #fff;
+  border: 1px solid rgb(0 0 0 / 0.12);
+  border-radius: 999px;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.06), 0 6px 16px rgb(0 0 0 / 0.08);
+  animation: unspin var(--lap) linear infinite;
+}
+
+/* outer decorative track, turns the other way */
+.outer {
+  position: absolute;
+  inset: 3%;
+  border: 1px solid rgb(0 0 0 / 0.07);
+  border-radius: 50%;
+  animation: unspin calc(var(--lap) * 1.6) linear infinite;
+}
+.outer i {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: var(--pf-accent, #151515);
+  opacity: 0.35;
+}
+
+.halo {
+  position: absolute;
+  inset: 36%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(0 0 0 / 0.1), transparent);
+  animation: breathe 4s ease-in-out infinite;
+}
+
+.core {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 8px;
+}
+.mark {
+  width: clamp(48px, 13%, 72px);
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgb(0 0 0 / 0.18);
+}
+.name {
+  font-weight: 700;
+  font-size: clamp(0.85rem, 2.4vw, 1.05rem);
+  color: #151515;
+}
+
+.caption {
+  margin: 12px 0 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  opacity: 0.75;
+}
+
+@keyframes spin {
+  to {
+    rotate: 360deg;
+  }
+}
+@keyframes unspin {
+  to {
+    rotate: -360deg;
+  }
+}
+@keyframes breathe {
+  50% {
+    opacity: 0.45;
+    transform: scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ring,
+  .chip,
+  .outer,
+  .halo {
+    animation: none;
+  }
+}

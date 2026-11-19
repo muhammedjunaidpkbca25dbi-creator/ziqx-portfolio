@@ -1,0 +1,104 @@
+.layout {
+  display: grid;
+  gap: 24px;
+}
+
+/* no tile: the list spans the full width */
+.layoutFull {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .layout {
+    grid-template-columns: 168px minmax(0, 1fr);
+    gap: 56px;
+    align-items: start;
+  }
+  /* no tile: the list spans the full width (works even if Faq.tsx still uses .layout) */
+  .layout:not(:has(.tile)) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.tile {
+  width: 120px;
+  height: 120px;
+  border-radius: 28px;
+}
+
+@media (min-width: 768px) {
+  .tile {
+    width: 168px;
+    height: 168px;
+  }
+}
+
+.list {
+  border-bottom: 1px solid var(--pf-line);
+}
+
+.item {
+  border-top: 1px solid var(--pf-line);
+}
+
+.heading {
+  margin: 0;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  min-height: 64px;
+  padding: 12px 0;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  font-size: clamp(18px, 2vw, 22px);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  text-align: left;
+  color: var(--pf-ink);
+  cursor: pointer;
+}
+
+.chevron {
+  flex: none;
+  transition: transform var(--pf-m150) var(--pf-ease-out);
+}
+
+.button[aria-expanded='true'] .chevron {
+  transform: rotate(180deg);
+}
+
+.answer p {
+  max-width: 62ch;
+  margin: 0 0 24px;
+  font-size: 17px;
+  line-height: 1.65;
+  animation: fade var(--pf-m150) var(--pf-ease-out);
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button[aria-expanded='true'] .chevron {
+    transform: none;
+  }
+  .chevron {
+    transition: none;
+  }
+  .answer p {
+    animation: none;
+  }
+}

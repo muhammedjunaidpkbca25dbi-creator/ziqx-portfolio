@@ -1,0 +1,80 @@
+.reel {
+  margin-inline: calc(50% - 50vw);
+  overflow: hidden;
+}
+
+.track {
+  position: relative; /* makes slide offsetLeft relative to the track */
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding: 24px max(16px, calc(50% - min(380px, 36vw)));
+  outline: none;
+  -webkit-overflow-scrolling: touch;
+}
+.track::-webkit-scrollbar {
+  display: none;
+}
+.track:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--pf-accent, currentColor);
+  border-radius: 24px;
+}
+
+.slide {
+  position: relative;
+  flex: 0 0 auto; /* width follows each screenshot's own ratio (set inline) */
+  height: clamp(150px, 34vw, 360px);
+  margin: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #0b0b0d;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.08), 0 12px 32px rgb(0 0 0 / 0.14);
+  scroll-snap-align: center;
+  cursor: pointer;
+  will-change: transform, opacity;
+}
+.slide[data-active='true'] {
+  cursor: default;
+}
+.slide img {
+  object-fit: cover;
+}
+
+.caption {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+  justify-content: center;
+  margin: 8px auto 0;
+  padding-inline: 16px;
+  max-width: 720px;
+  text-align: center;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  opacity: 0.8;
+}
+.count {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.text {
+  animation: capIn 200ms ease-out;
+}
+@keyframes capIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text {
+    animation: none;
+  }
+  .slide {
+    will-change: auto;
+  }
+}

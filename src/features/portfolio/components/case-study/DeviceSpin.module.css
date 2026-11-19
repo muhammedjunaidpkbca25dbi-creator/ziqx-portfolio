@@ -1,0 +1,38 @@
+.fig {
+  margin: 32px 0 0;
+}
+
+/* white card: the frames have a pure white background, so the device floats on it */
+.card {
+  display: grid;
+  place-items: center;
+  padding: clamp(12px, 3vw, 32px);
+  background: #fff;
+  border: 1px solid rgb(0 0 0 / 0.08);
+  border-radius: 28px;
+  overflow: hidden;
+}
+
+.canvas {
+  display: block;
+  width: 100%;
+  max-width: 760px;
+  height: auto;
+  aspect-ratio: 480 / 276;
+  cursor: grab;
+  touch-action: pan-y; /* vertical scroll still works on touch */
+  user-select: none;
+}
+.canvas:active {
+  cursor: grabbing;
+}
+
+.caption {
+  margin: 12px 0 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  opacity: 0.75;
+}
+.hint {
+  opacity: 0.7;
+}

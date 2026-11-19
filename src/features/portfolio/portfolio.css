@@ -1,0 +1,130 @@
+/*
+  Portfolio feature: scoped design tokens + shared behaviour.
+  Everything lives under .pf-root so nothing leaks into the rest of the Console.
+  Colours are read from the Console screenshots; swap them for the Console's real tokens
+  (one place: this block) and the whole feature follows.
+*/
+.pf-root {
+  /* surfaces + text */
+  --pf-bg: #f3f1ec;
+  --pf-surface: #ffffff;
+  --pf-header: #fdfcfa;
+  --pf-ink: #151515;
+  --pf-body: #3a3a37;
+  --pf-muted: #6b6a64; /* 4.9:1 on --pf-bg */
+  --pf-line: #e1ddd3;
+  --pf-chip: #eae7df;
+
+  /* per-project accent: CaseStudy sets these inline from the data file */
+  --pf-accent: #d18a00;
+  --pf-accent-ink: #8a5a00;
+
+  --pf-font: 'Manrope Variable', Manrope, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* motion tokens: durations 100/150/200/300 only, ease-out in, ease-in out */
+  --pf-m100: 100ms;
+  --pf-m150: 150ms;
+  --pf-m200: 200ms;
+  --pf-m300: 300ms;
+  --pf-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --pf-ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+
+  /* layout: narrow 375 / medium 768 / wide 1280 */
+  --pf-wide: 1280px;
+  --pf-gutter: 16px;
+
+  min-height: 100dvh;
+  background: var(--pf-bg);
+  color: var(--pf-body);
+  font-family: var(--pf-font);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+@media (min-width: 768px) {
+  .pf-root {
+    --pf-gutter: 32px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .pf-root {
+    --pf-gutter: 48px;
+  }
+}
+
+.pf-root *,
+.pf-root *::before,
+.pf-root *::after {
+  box-sizing: border-box;
+}
+
+.pf-root img {
+  display: block;
+}
+
+.pf-root :focus-visible {
+  outline: 2px solid var(--pf-ink);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+/* Anchor jumps from the chapter rail */
+@media (prefers-reduced-motion: no-preference) {
+  html:has(.pf-root) {
+    scroll-behavior: smooth;
+  }
+}
+
+/*
+  Reveal: content is visible by default (SSR / no-JS safe). <Reveal> only hides an element
+  after hydration, and only if it starts below the fold. 300ms, 8px, opacity + transform.
+*/
+.pf-root [data-reveal='hidden'] {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.pf-root [data-reveal='shown'] {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--pf-m300) var(--pf-ease-out),
+    transform var(--pf-m300) var(--pf-ease-out);
+  transition-delay: var(--pf-d, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pf-root [data-reveal='hidden'] {
+    transform: none;
+  }
+  .pf-root [data-reveal='shown'] {
+    transition: opacity var(--pf-m100) linear;
+    transition-delay: 0ms;
+  }
+}
+
+/* Card -> detail shared-element morph (cover image carries a per-slug view-transition-name) */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-group(*) {
+    animation-duration: 300ms;
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+/* While a card -> detail transition runs, skip entrance animations so the morph captures a settled page */
+html[data-pf-vt] .pf-root [data-enter] {
+  animation: none;
+}
+
+.pf-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

@@ -1,0 +1,104 @@
+/* ---- chapter rail (wide only) ---- */
+.rail {
+  display: none;
+}
+
+@media (min-width: 1280px) {
+  .rail {
+    display: block;
+    position: fixed;
+    right: 10px;
+    top: 50%;
+    z-index: 30;
+    transform: translateY(-50%);
+  }
+}
+
+.list {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  text-decoration: none;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #c4c0b5;
+  transition:
+    transform var(--pf-m150) var(--pf-ease-out),
+    background var(--pf-m150) var(--pf-ease-out);
+}
+
+.link[aria-current='true'] .dot {
+  background: var(--pf-ink);
+  transform: scale(1.5);
+}
+
+.label {
+  position: absolute;
+  right: 44px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--pf-ink);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(4px);
+  transition:
+    opacity var(--pf-m150) var(--pf-ease-out),
+    transform var(--pf-m150) var(--pf-ease-out);
+}
+
+@media (hover: hover) {
+  .link:hover .label {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.link:focus-visible .label {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---- reading progress ---- */
+.progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  pointer-events: none;
+}
+
+.fill {
+  height: 100%;
+  background: var(--pf-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot,
+  .label {
+    transition: opacity var(--pf-m100) linear;
+    transform: none;
+  }
+  .link[aria-current='true'] .dot {
+    transform: none;
+  }
+}

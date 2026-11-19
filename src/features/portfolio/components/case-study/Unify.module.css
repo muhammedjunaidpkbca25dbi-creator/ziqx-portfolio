@@ -1,0 +1,88 @@
+.figure {
+  margin: 0;
+}
+
+.stage {
+  --p: 0; /* 0 = scattered, 1 = one system. Written by Unify.tsx on scroll. */
+  --spread: 0.55;
+  position: relative;
+  container-type: inline-size;
+  height: 300px;
+  overflow: hidden;
+  border: 1px solid var(--pf-line);
+  border-radius: 24px;
+  background: var(--pf-surface);
+}
+
+@media (min-width: 768px) {
+  .stage {
+    --spread: 1;
+    height: 340px;
+  }
+  .chip {
+    padding: 0 20px;
+    font-size: 16px;
+  }
+}
+
+.chip {
+  --q: calc(1 - var(--p));
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--pf-line);
+  border-radius: 999px;
+  background: var(--pf-bg);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--pf-ink);
+  white-space: nowrap;
+  transform: translate(-50%, -50%)
+    translate(calc(var(--dx) * var(--spread) * var(--q) * 1cqw), calc(var(--dy) * var(--q) * 1px))
+    rotate(calc(var(--r) * var(--q) * 1deg)) scale(calc(1 - 0.2 * var(--p)));
+  opacity: clamp(0, calc((0.94 - var(--p)) * 10), 1);
+  will-change: transform, opacity;
+}
+
+.tile {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 12px;
+  opacity: clamp(0, calc((var(--p) - 0.7) * 4), 1);
+  transform: scale(calc(0.92 + 0.08 * var(--p)));
+}
+
+.mark {
+  border-radius: 28px;
+}
+
+.name {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--pf-ink);
+}
+
+.caption {
+  margin-top: 16px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--pf-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage {
+    --p: 1;
+  }
+  .chip,
+  .tile {
+    will-change: auto;
+  }
+}
